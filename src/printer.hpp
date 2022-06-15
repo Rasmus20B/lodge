@@ -1,6 +1,6 @@
 #pragma once
 
-#include "entry.hpp"
+#include "event.hpp"
 #include "outputStream.hpp"
 
 namespace lodge {

@@ -3,6 +3,7 @@
 #include "levels.hpp"
 
 namespace lodge {
+
 struct Event {
   uint64_t id = {};
   Level level = Level::LODGE_DEBUG;

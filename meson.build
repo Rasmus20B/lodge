@@ -6,7 +6,6 @@ project (
   default_options: [
     'buildtype=release',
     'warning_level=3',
-
     'cpp_std=c++20'
   ]
 )
@@ -435,20 +434,17 @@ lodge_dep = dependency('', required: false)
 #   version: '>=0.4.0',
 # )
 
-lodge_lib = library('lodge', 'src/lodge.hpp', 'src/levels.hpp', 'src/entry.hpp', 'src/outputStream.hpp', 'src/printer.hpp', 'src/queue.hpp')
-
-subdir('test')
+lodge_lib = library('lodge', 'src/lodge.hpp', 'src/levels.hpp', 'src/event.hpp', 'src/outputStream.hpp', 'src/printer.hpp', 'src/queue.hpp')
 
 # if get_option('compile_library')
 # subdir('src')
 # else
 # subdir('include')
 # endif
-
-# build_tests = get_option('build_tests') and not is_subproject
-# if build_tests
-# subdir('test')
-# endif
+build_tests = get_option('build_tests') and not is_subproject
+if build_tests
+subdir('test')
+endif
 
 # build_examples = get_option('build_examples') and not is_subproject
 # if build_examples
