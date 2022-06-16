@@ -16,10 +16,11 @@
 namespace lodge {
 
 template <typename... Args>
-int debug(fmt::format_string<Args...> fmt, Args &&...args) {
+auto debug(fmt::format_string<Args...> fmt, Args &&...args) {
   log(Level::LODGE_DEBUG, fmt, std::forward<Args>(args)...);
-  return 0;
 }
+
+template <typename T> auto debug(const T msg) { log(Level::LODGE_DEBUG, msg); }
 
 template <typename... Args>
 auto log(Level level, fmt::format_string<Args...> fmt, Args &&...args) {
@@ -30,4 +31,7 @@ auto log(Level level, fmt::format_string<Args...> fmt, Args &&...args) {
   std::cout << buf << std::endl;
 }
 
+template <typename T> auto log(Level level, const T msg) {
+  log(level, "{}", msg);
+}
 } // namespace lodge
