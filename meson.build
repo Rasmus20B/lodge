@@ -428,28 +428,17 @@ name: 'supports __float128'
 # Empty dependency that will be filled either in src/ or include/
 lodge_dep = dependency('', required: false)
 
-# gtest = dependency(
-#   'gtest',
-#   fallback: ['gtest', 'gtest_dep'],
-#   version: '>=0.4.0',
-# )
-
 lodge_lib = library('lodge', 'src/lodge.hpp', 'src/levels.hpp', 'src/event.hpp', 'src/outputStream.hpp', 'src/printer.hpp', 'src/queue.hpp')
 
-# if get_option('compile_library')
-# subdir('src')
-# else
-# subdir('include')
-# endif
 build_tests = get_option('build_tests') and not is_subproject
 if build_tests
 subdir('test')
 endif
 
-# build_examples = get_option('build_examples') and not is_subproject
-# if build_examples
-# subdir('examples')
-# endif
+build_examples = get_option('build_examples') and not is_subproject
+if build_examples
+subdir('examples')
+endif
 
 # # Allow subproject usage
 meson.override_dependency(meson.project_name(), lodge_dep)
