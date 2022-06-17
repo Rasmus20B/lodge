@@ -30,10 +30,10 @@ template <typename... Args>
 auto error(fmt::format_string<Args...> fmt, Args &&...args) {
   log(Level::LODGE_ERROR, fmt, std::forward<Args>(args)...);
 }
-template <typename T> auto debug(const T msg) { log(Level::LODGE_DEBUG, msg); }
-template <typename T> auto warn(const T msg) { log(Level::LODGE_DEBUG, msg); }
-template <typename T> auto info(const T msg) { log(Level::LODGE_DEBUG, msg); }
-template <typename T> auto error(const T msg) { log(Level::LODGE_DEBUG, msg); }
+void debug(const auto msg) { log(Level::LODGE_DEBUG, msg); }
+void warn(const auto msg) { log(Level::LODGE_DEBUG, msg); }
+void info(const auto msg) { log(Level::LODGE_DEBUG, msg); }
+void error(const auto msg) { log(Level::LODGE_DEBUG, msg); }
 
 template <typename... Args>
 auto log(Level level, fmt::format_string<Args...> fmt, Args &&...args) {
