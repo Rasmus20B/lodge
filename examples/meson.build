@@ -8,6 +8,6 @@ examples_src = [ 'example1.cpp']
 e = executable('example1',
                   sources : [ examples_src ],
                   dependencies : [ fmt_dep ],
-                  link_with : [ fmt_lib ]
+                  link_with : [ fmt_lib, lodge_lib ]
 )
 

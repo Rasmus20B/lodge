@@ -2,8 +2,6 @@
 
 #include <source_location>
 
-#include "lodge.hpp"
-
 namespace lodge {
 
 #define LODGE_DEBUG(...) log(LODGE_DEBUG, __FILE__, __func__, __LINE__, ...)
