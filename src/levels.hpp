@@ -23,7 +23,7 @@ constexpr std::string_view LODGE_NAME_ERROR = std::string_view("ERROR", 5);
 constexpr std::array<std::string_view, 4> LODGE_LEVEL_NAMES = {
     LODGE_NAME_INFO, LODGE_NAME_DEBUG, LODGE_NAME_WARNING, LODGE_NAME_ERROR};
 
-static inline const std::string_view &to_string_view(Level level) noexcept {
+inline const std::string_view &to_string_view(Level level) noexcept {
   return LODGE_LEVEL_NAMES[static_cast<int>(level)];
 }
 } // namespace lodge
