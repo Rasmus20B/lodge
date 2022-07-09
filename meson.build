@@ -428,7 +428,7 @@ name: 'supports __float128'
 # Empty dependency that will be filled either in src/ or include/
 lodge_dep = dependency('', required: false)
 
-lodge_lib = library('lodge', 'src/lodge.hpp', 'src/levels.hpp', 'src/log_item.hpp', 'src/outputStream.hpp', 'src/printer.hpp', 'src/queue.hpp')
+lodge_lib = library('lodge', 'src/lodge.hpp', 'src/levels.hpp', 'src/log_item.hpp', 'src/format.hpp', 'src/printer.hpp', 'src/queue.hpp')
 
 build_tests = get_option('build_tests') and not is_subproject
 if build_tests
