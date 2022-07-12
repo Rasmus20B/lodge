@@ -4,6 +4,7 @@
 #include <atomic>
 #include <bit>
 #include <iostream>
+#include <optional>
 #include <thread>
 
 namespace lodge {
@@ -28,18 +29,16 @@ public:
   static bool push(T &val) {
 
     uint16_t currentHead;
-    // uint16_t currentTail;
     //  write something, increment the head, then increment the last readable
     do {
 
       currentHead = m_head.load();
-      // currentTail = m_tail;
       //  Check if the Queue is currently full
       [[unlikely]] if (full()) return false;
     }
     // exchange the private write index with the current thread's write index
     while (!m_head.compare_exchange_strong(currentHead, (currentHead + 1)));
-    nodes[m_head.load()] = val;
+    nodes[m_head.load() - 1] = val;
 
     // maxRead needs to catch up now that valid data is read to be read
     while (!m_maxRead.compare_exchange_strong(currentHead, (currentHead + 1))) {
@@ -49,7 +48,24 @@ public:
     return true;
   }
 
-  static T pop() { return nodes[m_maxRead]; }
+  std::optional<T> pop() {
+    if (m_head == m_tail) {
+      std::cout << "gets\n";
+      return std::nullopt;
+    }
+
+    auto data = std::move(nodes[m_tail]);
+
+    m_tail++;
+    return data;
+  }
+
+  static void print() {
+
+    for (uint16_t i = m_tail; i <= m_head; i++) {
+      std::cout << nodes.at(i) << '\n';
+    }
+  }
 
   static inline std::size_t getSize() { return m_size; }
   static inline std::size_t getNodeSize() { return m_nodeSize; }
@@ -62,6 +78,7 @@ private:
   static inline std::array<T, m_totalNodes> nodes{};
   static inline std::atomic<uint16_t> m_head = 0;
   static inline std::atomic<uint16_t> m_maxRead = 0;
+  // static inline std::atomic<uint16_t> m_tail = 0;
   static inline uint16_t m_tail = 0;
 };
 

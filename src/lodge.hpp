@@ -25,7 +25,12 @@ public:
   }
 
   static void log_thread_main() noexcept {
-    log_item i = q.pop();
+    // Flush the Queue on a timer
+    using namespace std::chrono_literals;
+    while (1) {
+      std::optional<log_item> i = q.pop();
+      std::this_thread::sleep_for(100ms);
+    }
     return;
   };
   static void start() noexcept {
