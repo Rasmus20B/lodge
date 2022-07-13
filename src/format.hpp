@@ -11,4 +11,6 @@ struct format_string {
                 const std::experimental::source_location &loc =
                     std::experimental::source_location::current())
       : str(str), loc(loc) {}
+
+  format_string(const char *str) : str(str) {}
 };

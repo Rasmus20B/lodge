@@ -2,7 +2,6 @@
 
 #include "levels.hpp"
 #include "log_item.hpp"
-#include "printer.hpp"
 #include "queue.hpp"
 
 #include <chrono>
@@ -24,17 +23,24 @@ public:
     m_logLevel = logger_level;
   }
 
-  static void log_thread_main() noexcept {
+  void log_thread_main() noexcept {
     // Flush the Queue on a timer
     using namespace std::chrono_literals;
     while (1) {
-      std::optional<log_item> i = q.pop();
+      std::optional<log_item> i(q.pop());
+      if (i) {
+        std::cout << i->time.time_since_epoch() << ":"
+                  << to_string_view(i->level) << " " << '\n';
+      }
+      writeLogToSinks(i);
       std::this_thread::sleep_for(100ms);
+      i = {};
     }
     return;
   };
-  static void start() noexcept {
-    log_thread = std::jthread(log_thread_main);
+
+  void start() noexcept {
+    log_thread = std::jthread(&logger::log_thread_main, this);
     return;
   }
 
@@ -81,15 +87,15 @@ public:
     // Create a log item using the buffer and other args
     log_item log_item(loc, level, buf);
     // Pass the log message into final log function
-    lprint(log_item);
+    q.push(log_item);
   }
 
-  static void setLogLevel(const Level level) noexcept { m_logLevel = level; }
-  static void writeLogsToSinks();
+  void setLogLevel(const Level level) noexcept { m_logLevel = level; }
+  template <typename T> static void writeLogToSinks(T item) noexcept { return; }
 
 private:
-  static inline Level m_logLevel;
-  static inline std::jthread log_thread;
+  Level m_logLevel;
+  std::jthread log_thread{};
   static lQueue<log_item, 64> q;
 };
 

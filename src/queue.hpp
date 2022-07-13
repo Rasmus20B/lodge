@@ -50,7 +50,6 @@ public:
 
   std::optional<T> pop() {
     if (m_head == m_tail) {
-      std::cout << "gets\n";
       return std::nullopt;
     }
 
@@ -66,6 +65,24 @@ public:
       std::cout << nodes.at(i) << '\n';
     }
   }
+
+  // std::unique_ptr<T> try_pop() {
+  //   if (m_head == m_tail) {
+  //     return nullptr;
+  //   }
+  //   std::unique_ptr<T> data = std::move(&nodes[m_tail]);
+  //   m_tail++;
+  //   return data;
+  // }
+
+  // T try_pop() {
+  //   if (m_head == m_tail) {
+  //     return std::nullopt;
+  //   }
+  //   T data = std::move(nodes[m_tail]);
+  //   m_tail++;
+  //   return data;
+  // }
 
   static inline std::size_t getSize() { return m_size; }
   static inline std::size_t getNodeSize() { return m_nodeSize; }
