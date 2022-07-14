@@ -53,7 +53,7 @@ message('has_exceptions: @0@'.format(has_exceptions))
 
 # GCC or Clang
 if is_gcc or is_clang
-devel_args += '-march=native'
+devel_args += ['-march=native', '-g']
 endif
 
 # GCC

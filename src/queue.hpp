@@ -41,7 +41,8 @@ public:
     }
     // exchange the private write index with the current thread's write index
     while (!m_head.compare_exchange_strong(currentHead, (currentHead + 1)));
-    nodes[m_head.load() - 1] = val;
+    std::cout << "size of value in queue: " << sizeof(val) << '\n';
+    nodes[m_head - 1] = val;
 
     // maxRead needs to catch up now that valid data is read to be read
     while (!m_maxRead.compare_exchange_strong(currentHead, (currentHead + 1))) {
@@ -55,10 +56,8 @@ public:
 
     [[unlikely]] if (m_head == m_tail) { return std::nullopt; }
 
-    std::optional<T> data = nodes[m_tail];
-
     m_tail++;
-    return data;
+    return static_cast<std::optional<T>>(nodes[m_tail - 1]);
   }
 
   // T pop() noexcept {

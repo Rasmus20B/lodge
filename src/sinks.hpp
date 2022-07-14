@@ -39,16 +39,15 @@ template <typename T> struct sinks {
     std::cout << "gets to invoke function\n";
     for (auto &i : func) {
       i(item);
-      i(item);
     }
   }
 };
 
 void sinkStdio(const log_item i) {
 
-  std::cout << i.time.time_since_epoch() << " : " << to_string_view(i.level)
-            << " " << i.buf.data() << "\n";
-
+  std::cout << i.time.time_since_epoch() << " : [" << to_string_view(i.level)
+            << "] " << i.buf << '\n'
+            << std::flush;
   return;
 }
 // This is where new sink functions can go

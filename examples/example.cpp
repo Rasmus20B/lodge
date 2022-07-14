@@ -8,4 +8,7 @@ int main() {
   // Should not print "World"
   lodge::log.warn("Hello ", "World");
   lodge::log.debug("THIS IS A SINGLE PARAMETER");
+  lodge::log.debug("asdf");
+  lodge::log.debug("{}", "asdfasdfasdfSD");
+  lodge::log.debug("{} of them", 6);
 }

@@ -34,9 +34,9 @@ public:
       //           << to_string_view(i->level) << " " << i->buf << "\n";
 
       if (i.has_value()) {
-
-        // writeLogToSinks(i.value());
         sf(i.value());
+        // std::cout << i->time.time_since_epoch() << " : "
+        // << to_string_view(i->level) << " " << i->buf << "\n";
       }
       std::this_thread::sleep_for(100ms);
     }
@@ -92,7 +92,8 @@ public:
     // Create a log item using the buffer and other args
     log_item log_item(loc, level, buf);
 
-    q.push(log_item);
+    while (!q.push(log_item))
+      ;
   }
 
   // void final_log(log_item i) {}
@@ -128,7 +129,7 @@ public:
 private:
   Level m_logLevel;
   std::jthread log_thread;
-  lQueue<log_item, 128> q;
+  lQueue<log_item, 64> q;
   sinks<void (*)(log_item)> s{};
   void (*sf)(log_item) = sinkStdio;
 };
