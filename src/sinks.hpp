@@ -38,18 +38,16 @@ template <typename T> struct sinks {
   void invoke_all(log_item &item) {
     std::cout << "gets to invoke function\n";
     for (auto &i : func) {
-      std::cout << item.buf << '\n';
-      // i(item);
+      i(item);
+      i(item);
     }
   }
 };
 
-static void sinkStdio(const log_item i) {
-
-  std::cout << "HERESDF\n";
+void sinkStdio(const log_item i) {
 
   std::cout << i.time.time_since_epoch() << " : " << to_string_view(i.level)
-            << " " << i.buf << "\n";
+            << " " << i.buf.data() << "\n";
 
   return;
 }

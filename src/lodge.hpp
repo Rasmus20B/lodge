@@ -29,12 +29,14 @@ public:
     // Flush the Queue on a timer
     using namespace std::chrono_literals;
     while (1) {
-      std::optional<log_item> i(q.pop());
-      if (i) {
-        // std::cout << i->time.time_since_epoch() << " : "
-        //           << to_string_view(i->level) << " " << i->buf << "\n";
+      std::optional<log_item> i(q.try_pop());
+      // std::cout << i->time.time_since_epoch() << " : "
+      //           << to_string_view(i->level) << " " << i->buf << "\n";
 
-        writeLogToSinks(i.value());
+      if (i.has_value()) {
+
+        // writeLogToSinks(i.value());
+        sf(i.value());
       }
       std::this_thread::sleep_for(100ms);
     }
@@ -65,33 +67,35 @@ public:
   }
 
   // Auto argument type expands to template<Typename T> (C++20)
-  static void debug(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
-  static void warn(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
-  static void info(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
-  static void error(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
+  void debug(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
+  void warn(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
+  void info(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
+  void error(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
 
   template <typename... Args>
-  static void log(Level level, fmt::format_string<Args...> fmt,
-                  Args &&...args) noexcept {
+  void log(Level level, fmt::format_string<Args...> fmt,
+           Args &&...args) noexcept {
     std::experimental::source_location loc{};
     log(loc, level, fmt, std::forward<Args>(args)...);
   }
 
-  template <typename T> static void log(Level level, const T msg) noexcept {
+  template <typename T> void log(Level level, const T msg) noexcept {
     log(level, "{}", msg);
   }
 
   template <typename... Args>
-  static void log(std::experimental::source_location loc, Level level,
-                  fmt::format_string<Args...> fmt, Args &&...args) noexcept {
+  void log(std::experimental::source_location loc, Level level,
+           fmt::format_string<Args...> fmt, Args &&...args) noexcept {
     std::string buf{};
     fmt::vformat_to(std::back_inserter(buf), fmt,
-                    fmt::make_format_args(std::forward<Args>(&args)...));
+                    fmt::make_format_args(std::forward<Args>(args)...));
     // Create a log item using the buffer and other args
     log_item log_item(loc, level, buf);
-    // Pass the log message into final log function
+
     q.push(log_item);
   }
+
+  // void final_log(log_item i) {}
 
   void setLogLevel(const Level level) noexcept { m_logLevel = level; }
 
@@ -114,11 +118,7 @@ public:
     }
   }
 
-  static void writeLogToSinks(log_item &i) noexcept {
-
-    // std::cout << i.time.time_since_epoch() << " : " <<
-    // to_string_view(i.level)
-    //           << " " << i.buf << "\n";
+  void writeLogToSinks(log_item &i) noexcept {
 
     sf(i);
     // s.invoke_all(i);
@@ -128,9 +128,9 @@ public:
 private:
   Level m_logLevel;
   std::jthread log_thread;
-  static lQueue<log_item, 64> q;
+  lQueue<log_item, 128> q;
   sinks<void (*)(log_item)> s{};
-  static inline void (*sf)(log_item) = sinkStdio;
+  void (*sf)(log_item) = sinkStdio;
 };
 
 inline logger log;

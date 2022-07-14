@@ -52,14 +52,14 @@ TEST(QueueTest, pop_success) {
   q.push(y);
   q.push(z);
 
-  EXPECT_EQ(54, q.pop());
-  EXPECT_EQ(9, q.pop());
-  EXPECT_EQ(231, q.pop());
+  EXPECT_EQ(54, q.try_pop());
+  EXPECT_EQ(9, q.try_pop());
+  EXPECT_EQ(231, q.try_pop());
 
   EXPECT_EQ(true, q.empty());
 }
 
 TEST(QueueTest, pop_empty_fail) {
   lodge::lQueue<long, 32> q;
-  EXPECT_EQ(std::nullopt, q.pop());
+  EXPECT_EQ(std::nullopt, q.try_pop());
 }

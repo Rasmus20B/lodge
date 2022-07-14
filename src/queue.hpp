@@ -7,6 +7,9 @@
 #include <optional>
 #include <thread>
 
+#include "levels.hpp"
+#include "log_item.hpp"
+
 namespace lodge {
 
 // Queue of fixed size (power of 2) nodes
@@ -17,16 +20,16 @@ requires(std::has_single_bit(nodeSize), nodeSize < 65536)
 public:
   lQueue() noexcept = default;
 
-  [[nodiscard]] static inline bool empty() noexcept {
+  [[nodiscard]] bool empty() noexcept {
     return m_head.load(std::memory_order_relaxed) == m_tail;
   }
 
-  [[nodiscard]] static inline bool full() noexcept {
+  [[nodiscard]] bool full() noexcept {
     // return (m_head.load(std::memory_order_relaxed) + nodeSize) == m_tail;
     return (m_head.load(std::memory_order_relaxed) == m_totalNodes);
   }
 
-  static bool push(T &val) {
+  bool push(T val) noexcept {
 
     uint16_t currentHead;
     //  write something, increment the head, then increment the last readable
@@ -48,37 +51,54 @@ public:
     return true;
   }
 
-  std::optional<T> pop() {
-    if (m_head == m_tail) {
-      return std::nullopt;
-    }
+  [[nodiscard]] std::optional<T> try_pop() noexcept {
 
-    auto data = std::move(nodes[m_tail]);
+    [[unlikely]] if (m_head == m_tail) { return std::nullopt; }
+
+    std::optional<T> data = nodes[m_tail];
 
     m_tail++;
     return data;
   }
 
-  static void print() {
+  // T pop() noexcept {
+  //   auto data = nodes[m_tail];
 
-    for (uint16_t i = m_tail; i <= m_head; i++) {
-      std::cout << nodes.at(i) << '\n';
-    }
-  }
+  //   m_tail++;
+  //   return data;
+  // }
 
-  static inline std::size_t getSize() { return m_size; }
-  static inline std::size_t getNodeSize() { return m_nodeSize; }
-  static inline std::size_t getTotalNodes() { return m_totalNodes; }
+  // template <typename V>
+  // requires std::is_same<V, lodge::log_item>::value static void print() {
+
+  //   for (auto &i : nodes) {
+  //     std::cout << i.time.time_since_epoch() << " : " <<
+  //     to_string_view(i.level)
+  //               << " " << i.buf.data() << "\n";
+  //   }
+  //   return;
+  // }
+
+  // static void print() noexcept {
+
+  //   for (uint16_t i = m_tail; i <= m_head; i++) {
+  //     std::cout << nodes.at(i) << '\n';
+  //   }
+  // }
+
+  std::size_t getSize() { return m_size; }
+  std::size_t getNodeSize() { return m_nodeSize; }
+  std::size_t getTotalNodes() { return m_totalNodes; }
 
 private:
-  static constexpr std::size_t m_size = 65535;
-  static constexpr std::size_t m_nodeSize = nodeSize;
-  static constexpr std::size_t m_totalNodes = m_size / m_nodeSize;
-  static inline std::array<T, m_totalNodes> nodes{};
-  static inline std::atomic<uint16_t> m_head = 0;
-  static inline std::atomic<uint16_t> m_maxRead = 0;
+  constexpr static std::size_t m_size = 65535;
+  constexpr static std::size_t m_nodeSize = nodeSize;
+  constexpr static std::size_t m_totalNodes = m_size / m_nodeSize;
+  std::array<T, m_totalNodes> nodes;
+  std::atomic<uint16_t> m_head = 0;
+  std::atomic<uint16_t> m_maxRead = 0;
   // static inline std::atomic<uint16_t> m_tail = 0;
-  static inline uint16_t m_tail = 0;
+  uint16_t m_tail = 0;
 };
 
 } // namespace lodge
