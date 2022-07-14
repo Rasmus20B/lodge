@@ -14,7 +14,7 @@ struct log_item {
 
   std::chrono::time_point<std::chrono::system_clock> time =
       std::chrono::system_clock::now();
-  std::experimental::source_location loc{};
+  std::experimental::source_location loc;
   Level level;
   std::string buf;
 };
