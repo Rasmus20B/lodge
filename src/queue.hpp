@@ -33,6 +33,9 @@ public:
 
     uint16_t currentHead;
     //  write something, increment the head, then increment the last readable
+    if (sizeof val > m_nodeSize) {
+      return false;
+    }
     do {
 
       currentHead = m_head.load();
@@ -41,7 +44,6 @@ public:
     }
     // exchange the private write index with the current thread's write index
     while (!m_head.compare_exchange_strong(currentHead, (currentHead + 1)));
-    std::cout << "size of value in queue: " << sizeof(val) << '\n';
     nodes[m_head - 1] = val;
 
     // maxRead needs to catch up now that valid data is read to be read

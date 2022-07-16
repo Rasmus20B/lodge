@@ -92,7 +92,7 @@ public:
     // Create a log item using the buffer and other args
     log_item log_item(loc, level, buf);
 
-    while (!q.push(log_item))
+    while (!q.push(std::move(log_item)))
       ;
   }
 
@@ -129,7 +129,7 @@ public:
 private:
   Level m_logLevel;
   std::jthread log_thread;
-  lQueue<log_item, 64> q;
+  lQueue<log_item, 128> q;
   sinks<void (*)(log_item)> s{};
   void (*sf)(log_item) = sinkStdio;
 };

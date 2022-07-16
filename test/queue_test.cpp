@@ -6,6 +6,7 @@
 #include <optional>
 
 #include "../src/queue.hpp"
+
 TEST(QueueTest, empty) {
   lodge::lQueue<int, 32> q;
   EXPECT_EQ(true, q.empty());

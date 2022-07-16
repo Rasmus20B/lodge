@@ -45,8 +45,8 @@ template <typename T> struct sinks {
 
 void sinkStdio(const log_item i) {
 
-  std::cout << i.time.time_since_epoch() << " : [" << to_string_view(i.level)
-            << "] " << i.buf << '\n'
+  std::cout << i.time << " [" << to_string_view(i.level) << "] " << i.buf
+            << '\n'
             << std::flush;
   return;
 }
