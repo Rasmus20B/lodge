@@ -43,7 +43,7 @@ template <typename T> struct sinks {
   }
 };
 
-void sinkStdio(const log_item i) {
+static void sinkStdio(const log_item i) {
 
   std::cout << i.time << " [" << to_string_view(i.level) << "] " << i.buf
             << '\n'

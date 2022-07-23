@@ -38,7 +38,7 @@ public:
         // std::cout << i->time.time_since_epoch() << " : "
         // << to_string_view(i->level) << " " << i->buf << "\n";
       }
-      std::this_thread::sleep_for(100ms);
+      std::this_thread::sleep_for(1000ms);
     }
     return;
   };
@@ -83,6 +83,7 @@ public:
     log(level, "{}", msg);
   }
 
+  /* Buffer on heap are not being correctly transferred to Queue (SSO works) */
   template <typename... Args>
   void log(std::experimental::source_location loc, Level level,
            fmt::format_string<Args...> fmt, Args &&...args) noexcept {
@@ -92,8 +93,7 @@ public:
     // Create a log item using the buffer and other args
     log_item log_item(loc, level, buf);
 
-    while (!q.push(std::move(log_item)))
-      ;
+    q.push(std::move(log_item));
   }
 
   // void final_log(log_item i) {}

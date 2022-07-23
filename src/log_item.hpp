@@ -11,6 +11,8 @@
 namespace lodge {
 struct log_item {
   log_item() = default;
+  explicit operator bool() const { return false; }
+
   log_item(std::experimental::source_location loc, Level lvl,
            std::string_view msg)
       : loc(loc), level(lvl), buf(msg) {}

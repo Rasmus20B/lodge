@@ -20,11 +20,11 @@ requires(std::has_single_bit(nodeSize), nodeSize < 65536)
 public:
   lQueue() noexcept = default;
 
-  [[nodiscard]] bool empty() noexcept {
+  [[nodiscard]] bool empty() const noexcept {
     return m_head.load(std::memory_order_relaxed) == m_tail;
   }
 
-  [[nodiscard]] bool full() noexcept {
+  [[nodiscard]] bool full() const noexcept {
     // return (m_head.load(std::memory_order_relaxed) + nodeSize) == m_tail;
     return (m_head.load(std::memory_order_relaxed) == m_totalNodes);
   }
@@ -69,16 +69,15 @@ public:
   //   return data;
   // }
 
-  // template <typename V>
-  // requires std::is_same<V, lodge::log_item>::value static void print() {
+  template <typename V>
+  requires std::is_same<V, lodge::log_item>::value void print() {
 
-  //   for (auto &i : nodes) {
-  //     std::cout << i.time.time_since_epoch() << " : " <<
-  //     to_string_view(i.level)
-  //               << " " << i.buf.data() << "\n";
-  //   }
-  //   return;
-  // }
+    for (auto &i : nodes) {
+      std::cout << i.time << " : " << to_string_view(i.level) << " "
+                << i.buf.data() << "\n";
+    }
+    return;
+  }
 
   // static void print() noexcept {
 
@@ -95,7 +94,7 @@ private:
   constexpr static std::size_t m_size = 65535;
   constexpr static std::size_t m_nodeSize = nodeSize;
   constexpr static std::size_t m_totalNodes = m_size / m_nodeSize;
-  std::array<T, m_totalNodes> nodes;
+  std::array<T, m_totalNodes> nodes{};
   std::atomic<uint16_t> m_head = 0;
   std::atomic<uint16_t> m_maxRead = 0;
   // static inline std::atomic<uint16_t> m_tail = 0;
