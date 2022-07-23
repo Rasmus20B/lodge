@@ -93,7 +93,7 @@ public:
     // Create a log item using the buffer and other args
     log_item log_item(loc, level, buf);
 
-    q.push(std::move(log_item));
+    q.push(log_item);
   }
 
   // void final_log(log_item i) {}

@@ -20,6 +20,6 @@ struct log_item {
   std::time_t time = std::time(nullptr);
   std::experimental::source_location loc;
   Level level;
-  std::string_view buf;
+  std::string buf;
 };
 } // namespace lodge

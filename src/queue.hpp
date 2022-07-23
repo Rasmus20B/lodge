@@ -29,7 +29,9 @@ public:
     return (m_head.load(std::memory_order_relaxed) == m_totalNodes);
   }
 
-  bool push(T val) noexcept {
+  bool push(const T val) noexcept {
+
+    std::cout << sizeof(val) << std::endl;
 
     uint16_t currentHead;
     //  write something, increment the head, then increment the last readable
@@ -44,7 +46,7 @@ public:
     }
     // exchange the private write index with the current thread's write index
     while (!m_head.compare_exchange_strong(currentHead, (currentHead + 1)));
-    nodes[m_head - 1] = val;
+    nodes[m_head.load() - 1] = std::move(val);
 
     // maxRead needs to catch up now that valid data is read to be read
     while (!m_maxRead.compare_exchange_strong(currentHead, (currentHead + 1))) {
