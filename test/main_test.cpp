@@ -1,5 +1,4 @@
 
-#include <fmt/core.h>
 
 #include "gtest/gtest.h"
 

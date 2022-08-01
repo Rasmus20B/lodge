@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fmt/core.h>
 #include <functional>
 #include <string_view>
 
@@ -35,7 +36,7 @@ template <typename T> struct sinks {
   std::vector<T> func{};
   std::vector<std::string_view> name{};
 
-  void invoke_all(log_item &item) {
+  void invoke_all(LogItem &item) {
     std::cout << "gets to invoke function\n";
     for (auto &i : func) {
       i(item);
@@ -43,11 +44,12 @@ template <typename T> struct sinks {
   }
 };
 
-static void sinkStdio(const log_item i) {
+static void sinkStdio(const LogItem &i) {
+
+  fmt::print(fmt::runtime("{}"), i.buf);
 
   std::cout << i.time << " [" << to_string_view(i.level) << "] " << i.buf
-            << '\n'
-            << std::flush;
+            << std::endl;
   return;
 }
 // This is where new sink functions can go

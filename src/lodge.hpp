@@ -29,16 +29,12 @@ public:
     // Flush the Queue on a timer
     using namespace std::chrono_literals;
     while (1) {
-      std::optional<log_item> i(q.try_pop());
-      // std::cout << i->time.time_since_epoch() << " : "
-      //           << to_string_view(i->level) << " " << i->buf << "\n";
+      std::optional<LogItem> i = q.try_pop();
 
       if (i.has_value()) {
         sf(i.value());
-        // std::cout << i->time.time_since_epoch() << " : "
-        // << to_string_view(i->level) << " " << i->buf << "\n";
       }
-      std::this_thread::sleep_for(1000ms);
+      std::this_thread::sleep_for(100ms);
     }
     return;
   };
@@ -91,25 +87,18 @@ public:
     fmt::vformat_to(std::back_inserter(buf), fmt,
                     fmt::make_format_args(std::forward<Args>(args)...));
     // Create a log item using the buffer and other args
-    log_item log_item(loc, level, buf);
+    LogItem i(loc, level, buf);
 
-    q.push(log_item);
+    q.push(i);
   }
-
-  // void final_log(log_item i) {}
 
   void setLogLevel(const Level level) noexcept { m_logLevel = level; }
 
 #ifdef USE_FUNCTION
-  void addSink(const std::function<(void)(log_item)> function,
-               const std::string_view name) {
-    s.name.push_back(name);
-    s.func.push_back(function);
-  }
+  void addSink(const std::function<(void)(const LogItem &)> function,
+               const std::string_view name) {}
 #else
-  void addSink(void (*function)(log_item), const std::string_view name) {
-    s.name.push_back(name);
-    s.func.push_back(function);
+  void addSink(void (*function)(const LogItem &), const std::string_view name) {
   }
 #endif
 
@@ -119,7 +108,7 @@ public:
     }
   }
 
-  void writeLogToSinks(log_item &i) noexcept {
+  void writeLogToSinks(LogItem &i) noexcept {
 
     sf(i);
     // s.invoke_all(i);
@@ -129,9 +118,9 @@ public:
 private:
   Level m_logLevel;
   std::jthread log_thread;
-  lQueue<log_item, 128> q;
-  sinks<void (*)(log_item)> s{};
-  void (*sf)(log_item) = sinkStdio;
+  lQueue<LogItem, 128> q;
+  sinks<void (*)(LogItem)> s{};
+  void (*sf)(const LogItem &) = sinkStdio;
 };
 
 inline logger log;

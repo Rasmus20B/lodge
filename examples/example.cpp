@@ -1,5 +1,4 @@
-#include "../src/lodge.hpp"
-#include "fmt/core.h"
+#include "lodge.hpp"
 
 int main() {
   lodge::log.start();
@@ -7,7 +6,7 @@ int main() {
   lodge::log.error("Hello {}, {} {}", "World", 3, "arguments");
   // Should not print "World"
   lodge::log.warn("Hello ", "World");
-  lodge::log.debug("THIS IS A SINGLE PARAMETER");
+  lodge::log.debug("THIS IS  ");
   lodge::log.debug("asdf");
   lodge::log.debug("{}", "asdfasdfasdfSD");
   lodge::log.debug("{} of them", 6);

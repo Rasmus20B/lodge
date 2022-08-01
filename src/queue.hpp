@@ -31,8 +31,6 @@ public:
 
   bool push(const T val) noexcept {
 
-    std::cout << sizeof(val) << std::endl;
-
     uint16_t currentHead;
     //  write something, increment the head, then increment the last readable
     if (sizeof val > m_nodeSize) {
@@ -41,7 +39,7 @@ public:
     do {
 
       currentHead = m_head.load();
-      //  Check if the Queue is currently full
+      //  return if the Queue is currently full
       [[unlikely]] if (full()) return false;
     }
     // exchange the private write index with the current thread's write index
@@ -61,7 +59,8 @@ public:
     [[unlikely]] if (m_head == m_tail) { return std::nullopt; }
 
     m_tail++;
-    return static_cast<std::optional<T>>(nodes[m_tail - 1]);
+    auto data = static_cast<std::optional<T>>(nodes[m_tail - 1]);
+    return data;
   }
 
   // T pop() noexcept {
@@ -72,7 +71,7 @@ public:
   // }
 
   template <typename V>
-  requires std::is_same<V, lodge::log_item>::value void print() {
+  requires std::is_same<V, lodge::LogItem>::value void print() {
 
     for (auto &i : nodes) {
       std::cout << i.time << " : " << to_string_view(i.level) << " "
@@ -102,5 +101,4 @@ private:
   // static inline std::atomic<uint16_t> m_tail = 0;
   uint16_t m_tail = 0;
 };
-
 } // namespace lodge
