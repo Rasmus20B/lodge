@@ -1,6 +1,6 @@
 #pragma once
 
-#include <bits/chrono.h>
+// #include <bits/chrono.h>
 #include <chrono>
 #include <compare>
 #include <experimental/source_location>
@@ -39,7 +39,7 @@ struct LogItem {
   std::experimental::source_location loc;
   Level level;
   std::string buf;
-  std::string fmt_str = fmt::format("in {}s\n", 47);
+  std::string fmt_str{"[{}] {} : {}"};
 };
 
 } // namespace lodge

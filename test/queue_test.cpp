@@ -95,7 +95,6 @@ TEST(QueueTest, push_pop_log_item) {
 
   std::optional<lodge::LogItem> r = lq.try_pop();
   EXPECT_EQ(i, r.value());
-  std::cout << r->buf;
   EXPECT_EQ(i, lq.try_pop().value());
   EXPECT_EQ(i, lq.try_pop().value());
   EXPECT_EQ(i, lq.try_pop().value());

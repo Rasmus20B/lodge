@@ -63,13 +63,6 @@ public:
     return data;
   }
 
-  // T pop() noexcept {
-  //   auto data = nodes[m_tail];
-
-  //   m_tail++;
-  //   return data;
-  // }
-
   template <typename V>
   requires std::is_same<V, lodge::LogItem>::value void print() {
 
@@ -79,13 +72,6 @@ public:
     }
     return;
   }
-
-  // static void print() noexcept {
-
-  //   for (uint16_t i = m_tail; i <= m_head; i++) {
-  //     std::cout << nodes.at(i) << '\n';
-  //   }
-  // }
 
   std::size_t getSize() { return m_size; }
   std::size_t getNodeSize() { return m_nodeSize; }
