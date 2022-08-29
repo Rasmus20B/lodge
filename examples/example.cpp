@@ -9,7 +9,7 @@ int main() {
   lodge::log.warn("Hello ", "World");
   lodge::log.debug("THIS IS  ");
   lodge::log.debug("asdf");
-  lodge::log.debug("{}", "asdfasdfasdfSD");
+  lodge::log.debug("{}", "asdfasdfasdfSDasdasd");
   lodge::log.debug("{} of them", 6);
   lodge::log.stop();
 }

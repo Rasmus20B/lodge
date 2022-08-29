@@ -35,7 +35,7 @@ public:
       if (i.has_value()) {
         writeLogToSinks(i.value());
       }
-      std::this_thread::sleep_for(100ms);
+      std::this_thread::sleep_for(10ms);
     }
     info("Logging has stopped");
   }
