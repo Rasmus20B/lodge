@@ -39,7 +39,7 @@ struct LogItem {
   std::experimental::source_location loc;
   Level level;
   std::string buf;
-  std::string fmt_str{"[{}] {} : {}"};
+  std::string fmt_str{"[{}] {} : {}\n"};
 };
 
 } // namespace lodge

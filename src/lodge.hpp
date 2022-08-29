@@ -28,6 +28,7 @@ public:
 
     // Flush the Queue on a timer
     using namespace std::chrono_literals;
+
     while (!tk.stop_requested()) {
       std::optional<LogItem> i = q.try_pop();
 
@@ -100,14 +101,14 @@ public:
 
   void addSink(const std::function<void(const LogItem &)> function,
                const std::string_view name) {
+
     Sink<std::function<void(const LogItem &)>> ls{function, name};
     s.push_back(ls);
   }
 
   void writeLogToSinks(const LogItem &i) noexcept {
+
     for (auto &j : s) {
-      std::cout << &j.func << std::endl;
-      std::cout << "writing to " << j.name << '\n';
       j.func(i);
     }
   }

@@ -6,6 +6,10 @@
 #include "../src/queue.hpp"
 
 TEST(concurrentQueueTest, pushTest) {
+
+  int i = 0;
+
+  while(i < 10) {
   lodge::lQueue<int, 32> q;
   std::thread a([&] { q.push(1); });
   std::thread b([&] { q.push(2); });
@@ -20,5 +24,7 @@ TEST(concurrentQueueTest, pushTest) {
 
   for (int i = 1; i < 6; i++) {
     EXPECT_EQ(q.try_pop(), i);
+  }
+  i++;
   }
 }

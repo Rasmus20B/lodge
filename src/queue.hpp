@@ -38,13 +38,13 @@ public:
     }
     do {
 
-      currentHead = m_head.load();
+      currentHead = m_head.load(std::memory_order::release);
       //  return if the Queue is currently full
       [[unlikely]] if (full()) return false;
     }
     // exchange the private write index with the current thread's write index
     while (!m_head.compare_exchange_strong(currentHead, (currentHead + 1)));
-    nodes[m_head.load() - 1] = std::move(val);
+    nodes[m_head.load(std::memory_order::acquire) - 1] = std::move(val);
 
     // maxRead needs to catch up now that valid data is read to be read
     while (!m_maxRead.compare_exchange_strong(currentHead, (currentHead + 1))) {
