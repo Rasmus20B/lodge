@@ -15,5 +15,5 @@ FetchContent_Declare(
 set(FETCHCONTENT_QUIET OFF)
 FetchContent_MakeAvailable(fmt)
 
-add_library(lodge PUBLIC ${SOURCE_FILES})
+add_library(lodge SHARED ${SOURCE_FILES})
 target_link_libraries(lodge fmt)
