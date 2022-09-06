@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.13)  # CMake version check
 project(lodge)               # Create project "simple_example"
-set(CMAKE_CXX_STANDARD 20)            # Enable c++14 standard
+set(CMAKE_CXX_STANDARD 20 )            # Enable c++14 standard
+set(CXX_STANDARD_REQUIRED YES)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Add main.cpp file of project root directory as source file
 set(SOURCE_FILES src/lodge.hpp src/levels.hpp src/log_item.hpp src/queue.hpp src/sinks.hpp)

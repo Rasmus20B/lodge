@@ -9,7 +9,7 @@
 #include <iostream>
 #include <string_view>
 
-#include "levels.hpp"
+#include "levels.h"
 
 namespace lodge {
 struct LogItem {
@@ -20,11 +20,7 @@ struct LogItem {
           std::string_view msg)
       : loc{loc}, level{lvl}, buf{msg} {}
 
-  friend auto operator<=>(const LogItem &lhs, const LogItem &rhs) {
-    if (auto r = lhs.buf <=> rhs.buf; r != 0)
-      return r;
-    return lhs.level <=> rhs.level;
-  };
+  friend auto operator<=>(const LogItem &lhs, const LogItem &rhs);
 
   friend bool operator==(const LogItem &rhs, const LogItem &lhs) {
     if (rhs.buf == lhs.buf) {

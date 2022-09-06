@@ -7,9 +7,6 @@
 #include <optional>
 #include <thread>
 
-#include "levels.hpp"
-#include "log_item.hpp"
-
 namespace lodge {
 
 // Queue of fixed size (power of 2) nodes
@@ -61,16 +58,6 @@ public:
     m_tail++;
     auto data = static_cast<std::optional<T>>(nodes[m_tail - 1]);
     return data;
-  }
-
-  template <typename V>
-  requires std::is_same<V, lodge::LogItem>::value void print() {
-
-    for (auto &i : nodes) {
-      std::cout << i.time << " : " << to_string_view(i.level) << " "
-                << i.buf.data() << "\n";
-    }
-    return;
   }
 
   std::size_t getSize() { return m_size; }

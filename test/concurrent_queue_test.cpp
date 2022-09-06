@@ -3,7 +3,7 @@
 #include <limits>
 #include <optional>
 
-#include "../src/queue.hpp"
+#include "../src/queue.h"
 
 TEST(concurrentQueueTest, pushTest) {
 

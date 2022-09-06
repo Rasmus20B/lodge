@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-#include "../src/lodge.hpp"
+#include "../src/lodge.h"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

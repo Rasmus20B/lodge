@@ -4,8 +4,8 @@
 #include <limits>
 #include <optional>
 
-#include "../src/log_item.hpp"
-#include "../src/queue.hpp"
+#include "../src/log_item.h"
+#include "../src/queue.h"
 #include <experimental/source_location>
 
 TEST(QueueTest, empty) {

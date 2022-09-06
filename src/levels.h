@@ -7,6 +7,7 @@
 #include <string_view>
 
 namespace lodge {
+
 enum class Level {
   LODGE_INFO,
   LODGE_DEBUG,

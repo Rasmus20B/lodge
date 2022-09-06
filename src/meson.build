@@ -1,5 +1,5 @@
 
-lodge = library('lodge', sources : [ 'lodge.hpp', 'log_item.hpp', 'queue.hpp', 'levels.hpp', 'sinks.hpp' ],
+lodge = library('lodge', sources : [ 'lodge.h', 'lodge.cc', 'queue.h', 'levels.h', 'sinks.h', 'sinks.cc', 'log_item.h' ],
   dependencies : [fmt_dep], install : true)
 
 lodge_dep = declare_dependency(dependencies: [fmt_dep],
