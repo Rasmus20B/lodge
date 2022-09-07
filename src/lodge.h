@@ -42,9 +42,9 @@ namespace lodge {
 
     // Auto argument type expands to template<Typename T> (C++20)
     void debug(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
-    void warn(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
-    void info(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
-    void error(const auto msg) noexcept { log(Level::LODGE_DEBUG, msg); }
+    void warn(const auto msg) noexcept { log(Level::LODGE_WARN, msg); }
+    void info(const auto msg) noexcept { log(Level::LODGE_INFO, msg); }
+    void error(const auto msg) noexcept { log(Level::LODGE_ERROR, msg); }
 
     template <typename... Args>
     void log(Level level, fmt::format_string<Args...> fmt,
