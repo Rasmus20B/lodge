@@ -31,10 +31,10 @@ struct LogItem {
     return false;
   }
 
-  std::time_t time = std::time(nullptr);
   std::experimental::source_location loc;
   Level level;
   std::string buf;
+  std::time_t time = std::time(nullptr);
   std::string fmt_str{"[{}] {} : {}\n"};
 };
 
