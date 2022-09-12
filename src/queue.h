@@ -36,6 +36,7 @@ public:
     do {
       currentHead = m_head.load(std::memory_order::release);
       //Make sure head wraps around the array
+      [[unlikely]]
       if(currentHead > m_totalNodes) {
         m_head.store(0);
         currentHead = 0;
