@@ -34,8 +34,12 @@ public:
       return false;
     }
     do {
-
       currentHead = m_head.load(std::memory_order::release);
+      //Make sure head wraps around the array
+      if(currentHead > m_totalNodes) {
+        m_head.store(0);
+        currentHead = 0;
+      }
       //  return if the Queue is currently full
       [[unlikely]] if (full()) return false;
     }
@@ -45,6 +49,7 @@ public:
 
     // maxRead needs to catch up now that valid data is read to be read
     while (!m_maxRead.compare_exchange_strong(currentHead, (currentHead + 1))) {
+      std::cout << "gets here\n";
       std::this_thread::yield();
     };
 
