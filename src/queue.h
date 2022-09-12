@@ -49,7 +49,6 @@ public:
 
     // maxRead needs to catch up now that valid data is read to be read
     while (!m_maxRead.compare_exchange_strong(currentHead, (currentHead + 1))) {
-      std::cout << "gets here\n";
       std::this_thread::yield();
     };
 
