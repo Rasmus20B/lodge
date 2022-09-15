@@ -35,13 +35,19 @@ namespace lodge {
 
   void Logger::setLogLevel(const Level level) noexcept { m_logLevel = level; }
 
+#ifdef USE_STD_FUNCTION
   void Logger::addSink(const std::function<void(const LogItem &)> function,
                const std::string_view name) noexcept {
 
     Sink<std::function<void(const LogItem &)>> ls{function, name};
     s.push_back(ls);
   }
-
+#else
+  void Logger::addSink(void f(const LogItem&), const std::string_view name) noexcept{
+    Sink<void (*)(const LogItem &)> ls{f, name};
+    s.push_back(ls);
+  }
+#endif
   void Logger::writeLogToSinks(const LogItem &i) noexcept {
 
     for (auto &j : s) {

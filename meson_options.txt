@@ -1,2 +1,3 @@
 option('build_tests', type: 'boolean', value: false)
 option('build_examples', type: 'boolean', value: false)
+option('USE_STD_FUNCTION', type: 'boolean', value: false )
