@@ -18,5 +18,7 @@ struct Sink {
 };
 
 void sinkStdio(const LogItem &i);
+void sinkColourStdio(const LogItem &i);
+void sinkFile(const LogItem &i);
 
 } // namespace lodge
