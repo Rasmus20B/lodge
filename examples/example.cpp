@@ -2,6 +2,7 @@
 
 int main() {
   lodge::log.start();
+  lodge::log.addSink(lodge::sinkFile, "file");
   lodge::log.info("Hello {}", "World");
   lodge::log.error("Hello {}, {} {}", "World", 3, "arguments");
   // Should not print "World"
