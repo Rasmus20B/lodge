@@ -47,11 +47,6 @@ public:
     while (!m_head.compare_exchange_strong(currentHead, (currentHead + 1)));
     nodes[m_head.load(std::memory_order::acquire) - 1] = std::move(val);
 
-    // maxRead needs to catch up now that valid data is read to be read
-    while (!m_maxRead.compare_exchange_strong(currentHead, (currentHead + 1))) {
-      std::this_thread::yield();
-    };
-
     return true;
   }
 
@@ -74,8 +69,6 @@ private:
   constexpr static std::size_t m_totalNodes = m_size / m_nodeSize;
   std::array<T, m_totalNodes> nodes{};
   std::atomic<uint16_t> m_head = 0;
-  std::atomic<uint16_t> m_maxRead = 0;
-  // static inline std::atomic<uint16_t> m_tail = 0;
   uint16_t m_tail = 0;
 };
 } // namespace lodge
