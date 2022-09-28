@@ -6,16 +6,12 @@ Logger::Logger(const Level logger_level) noexcept { m_logLevel = logger_level; }
 
 void Logger::log_thread_main(std::stop_token tk) noexcept {
 
-  // Flush the Queue on a timer
-  using namespace std::chrono_literals;
-
   while (!tk.stop_requested()) {
     std::optional<LogItem> i = q.try_pop();
 
     if (i.has_value()) {
       writeLogToSinks(i.value());
     }
-    std::this_thread::sleep_for(10ms);
   }
 }
 
