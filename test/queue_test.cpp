@@ -8,8 +8,20 @@
 #include "../src/queue.h"
 #include <experimental/source_location>
 
-TEST(QueueTest, empty) {
+TEST(QueueTest, T_empty) {
   lodge::lQueue<int, 32> q;
+  EXPECT_EQ(true, q.empty());
+}
+TEST(QueueTest, run_T_empty) {
+  lodge::lQueue<int, 32> q;
+  q.push(1);
+  q.push(2);
+  q.push(3);
+  q.push(4);
+  q.try_pop();
+  q.try_pop();
+  q.try_pop();
+  q.try_pop();
   EXPECT_EQ(true, q.empty());
 }
 
