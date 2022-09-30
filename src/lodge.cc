@@ -6,17 +6,9 @@ Logger::Logger(const Level logger_level) noexcept { m_logLevel = logger_level; }
 
 void Logger::log_thread_main() noexcept {
 
-  while (!ss.get_token().stop_requested() && !q.empty()) {
+  while (!ss.get_token().stop_requested() || !q.empty()) {
     std::optional<LogItem> i = q.try_pop();
-
     if (i.has_value()) {
-      writeLogToSinks(i.value());
-    }
-  }
-
-  while(!q.empty()) {
-    std::optional<LogItem> i = q.try_pop();
-    if(i.has_value()) {
       writeLogToSinks(i.value());
     }
   }
@@ -30,7 +22,7 @@ void Logger::start() noexcept {
 
 void Logger::stop() noexcept {
   if(log_thread.joinable()) {
-    log_thread.request_stop();
+    ss.request_stop();
     log_thread.join();
   }
 }
