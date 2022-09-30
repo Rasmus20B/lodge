@@ -13,6 +13,13 @@ void Logger::log_thread_main() noexcept {
       writeLogToSinks(i.value());
     }
   }
+
+  while(!q.empty()) {
+    std::optional<LogItem> i = q.try_pop();
+    if(i.has_value()) {
+      writeLogToSinks(i.value());
+    }
+  }
   return;
 }
 
