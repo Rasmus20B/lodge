@@ -9,7 +9,7 @@ void Logger::log_thread_main(std::stop_token tk) noexcept {
   // Flush the Queue on a timer
   using namespace std::chrono_literals;
 
-  while (!tk.stop_requested()) {
+  while (!tk.stop_requested() || !q.empty()) {
     std::optional<LogItem> i = q.try_pop();
 
     if (i.has_value()) {
@@ -25,7 +25,7 @@ void Logger::start() noexcept {
 }
 
 void Logger::stop() noexcept {
-  log_thread.request_stop();
+  ss.request_stop();
   log_thread.join();
 }
 
@@ -46,7 +46,6 @@ void Logger::addSink(void f(const LogItem &),
 }
 #endif
 void Logger::writeLogToSinks(const LogItem &i) noexcept {
-
   for (auto &j : s) {
     j.func(i);
   }

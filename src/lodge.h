@@ -85,12 +85,11 @@ private:
   std::jthread log_thread;
   std::stop_source ss;
   lQueue<LogItem, 128> q;
-
-#ifdef USE_STD_FUNCTION
+// #ifdef USE_STD_FUNCTION
   std::vector<Sink<std::function<void(const LogItem &)>>> s{};
-#else
-  std::vector<Sink<void (*)(const LogItem &)>> s{};
-#endif
+// #else
+  // std::vector<Sink<void (*)(const LogItem &)>> s{};
+// #endif
 };
 inline Logger log;
 } // namespace lodge

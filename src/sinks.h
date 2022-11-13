@@ -6,14 +6,16 @@
 #include <fstream>
 #include <functional>
 #include <string_view>
+#include <type_traits>
 
 #include "levels.h"
 #include "log_item.h"
 
 namespace lodge {
 
-template <typename T> struct Sink {
-
+template <typename T> 
+  requires(std::invocable<T&, const LogItem&>)
+struct Sink {
   T func{};
   std::string_view name{};
 };

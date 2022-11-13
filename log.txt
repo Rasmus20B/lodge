@@ -1,0 +1,40 @@
+[1664781941] INFO : Hello World
+[1664781941] ERROR : Hello World, 3 arguments
+[1664781941] WARNING : asdf 
+[1664781941] WARNING : Hello 
+[1664781941] DEBUG : THIS IS  
+[1664781941] DEBUG : asdf
+[1664781941] DEBUG : asdfasdfasdfSDasdasd
+[1664781941] DEBUG : 6 of them
+[1664784520] INFO : Hello World
+[1664784520] ERROR : Hello World, 3 arguments
+[1664784520] WARNING : asdf 
+[1664784520] WARNING : Hello 
+[1664784520] DEBUG : THIS IS  
+[1664784520] DEBUG : asdf
+[1664784520] DEBUG : asdfasdfasdfSDasdasd
+[1664784520] DEBUG : 6 of them
+[1664784528] INFO : Hello World
+[1664784528] ERROR : Hello World, 3 arguments
+[1664784528] WARNING : asdf 
+[1664784528] WARNING : Hello 
+[1664784528] DEBUG : THIS IS  
+[1664784528] DEBUG : asdf
+[1664784528] DEBUG : asdfasdfasdfSDasdasd
+[1664784528] DEBUG : 6 of them
+[1664784530] INFO : Hello World
+[1664784530] ERROR : Hello World, 3 arguments
+[1664784530] WARNING : asdf 
+[1664784530] WARNING : Hello 
+[1664784530] DEBUG : THIS IS  
+[1664784530] DEBUG : asdf
+[1664784530] DEBUG : asdfasdfasdfSDasdasd
+[1664784530] DEBUG : 6 of them
+[1664784576] INFO : Hello World
+[1664784576] ERROR : Hello World, 3 arguments
+[1664784576] WARNING : asdf 
+[1664784576] WARNING : Hello 
+[1664784576] DEBUG : THIS IS  
+[1664784576] DEBUG : asdf
+[1664784576] DEBUG : asdfasdfasdfSDasdasd
+[1664784576] DEBUG : 6 of them
