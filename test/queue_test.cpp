@@ -8,8 +8,23 @@
 #include "../src/queue.h"
 #include <experimental/source_location>
 
-TEST(QueueTest, empty) {
+TEST(QueueTest, T_empty) {
   lodge::lQueue<int, 32> q;
+  EXPECT_EQ(true, q.empty());
+}
+TEST(QueueTest, run_T_empty) {
+  lodge::lQueue<int, 32> q;
+  q.push(1);
+  q.push(2);
+  q.push(3);
+  q.push(4);
+
+  //assigned to stop compiler warnings
+  const auto a = q.try_pop();
+  const auto b = q.try_pop();
+  const auto c = q.try_pop();
+  const auto d = q.try_pop();
+  if(a.value() + b.value() + c.value() + d.value()) {}
   EXPECT_EQ(true, q.empty());
 }
 

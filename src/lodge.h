@@ -18,7 +18,7 @@ namespace lodge {
 class Logger {
 public:
   Logger(const Level logger_level = default_log_level) noexcept;
-  void log_thread_main(std::stop_token tk) noexcept;
+  void log_thread_main() noexcept;
   void start() noexcept;
   void stop() noexcept;
 

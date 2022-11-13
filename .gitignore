@@ -2,4 +2,6 @@ build
 bin
 subprojects/*/
 .*
+*.data
+log.txt
 
