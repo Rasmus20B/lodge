@@ -7,13 +7,14 @@ void sinkStdio(const LogItem &i) {
 
 void sinkColorStdio(const LogItem &i) {
   fmt::print(fmt::runtime(i.fmt_str), i.time, to_string_view(i.level), i.buf);
+  
 }
 
 void sinkFile(const LogItem &i) {
   std::ofstream f;
   f.open("log.txt", std::iostream::ios_base::app);
 
-  fmt::print(f, (i.fmt_str), i.time, to_string_view(i.level), i.buf);
+  fmt::print(f, fmt::runtime(i.fmt_str), i.time, to_string_view(i.level), i.buf);
   f.close();
 }
 

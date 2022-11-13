@@ -13,7 +13,7 @@ project (
 is_subproject = meson.is_subproject()
 fmt_proj = subproject('fmt')
 fmt_dep = dependency('fmt', required : true) 
-fmt_lib = library('fmt', install : true )
+# fmt_lib = library('fmt', install : true )
 
 
 subdir('src')
