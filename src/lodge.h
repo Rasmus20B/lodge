@@ -90,5 +90,4 @@ private:
   std::vector<Sink<void (*)(const LogItem &)>> s{};
 #endif
 };
-inline Logger log;
 } // namespace lodge
