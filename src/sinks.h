@@ -19,9 +19,7 @@ struct Sink {
   T func{};
   std::string_view name{};
 };
-
 void sinkStdio(const LogItem &i);
 void sinkColourStdio(const LogItem &i);
 void sinkFile(const LogItem &i);
-
 } // namespace lodge

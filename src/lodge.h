@@ -67,12 +67,7 @@ public:
 
     q.push(i);
   }
-  #ifdef USE_STD_FUNCTION
-  void addSink(const std::function<void(const LogItem &)> function,
-               const std::string_view name) noexcept;
-  #else
   void addSink(void f(const LogItem &), const std::string_view name) noexcept;
-  #endif
 
 private:
   void setLogLevel(const Level l) noexcept;
@@ -84,10 +79,6 @@ private:
   std::jthread log_thread;
   std::stop_source ss;
   lQueue<LogItem, 128> q;
-#ifdef USE_STD_FUNCTION
-  std::vector<Sink<std::function<void(const LogItem &)>>> s{};
-#else
   std::vector<Sink<void (*)(const LogItem &)>> s{};
-#endif
 };
 } // namespace lodge

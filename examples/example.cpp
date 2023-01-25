@@ -3,7 +3,7 @@
 int main() {
   lodge::Logger logger{};
   logger.start();
-  // logger.addSink(lodge::sinkFile, "file");
+  logger.addSink(lodge::sinkFile, "file");
   logger.info("Hello {}", "World");
   logger.error("Hello {}, {} {}", "World", 3, "arguments");
   // Should not print "World"

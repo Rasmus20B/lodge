@@ -1,6 +1,5 @@
 #pragma once
 
-// #include <bits/chrono.h>
 #include <chrono>
 #include <compare>
 #include <experimental/source_location>
@@ -37,5 +36,4 @@ struct LogItem {
   std::time_t time = std::time(nullptr);
   std::string fmt_str{"[{}] {} : {}\n"};
 };
-
 } // namespace lodge
