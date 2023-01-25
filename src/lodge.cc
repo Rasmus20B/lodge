@@ -3,6 +3,7 @@
 namespace lodge {
 
 Logger::Logger(const Level logger_level) noexcept { m_logLevel = logger_level; }
+Logger::~Logger() { stop(); }
 
 void Logger::log_thread_main() noexcept {
 

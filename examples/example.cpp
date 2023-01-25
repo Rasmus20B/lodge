@@ -12,5 +12,5 @@ int main() {
   logger.debug("asdf");
   logger.debug("{}", "asdfasdfasdfSDasdasd");
   logger.debug("{} of them", 6);
-  logger.stop();
+  // logger.stop();
 }
